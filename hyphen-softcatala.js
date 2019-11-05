@@ -2,7 +2,10 @@
 
   function onChangeFunction() {
     original_text = normalizeNFC(document.getElementById("text_to_hyphen").value);
-    hyphenated_text = hyphenate(original_text).replace(/(l·|ŀ)/g, "l").replace(/(L·|Ŀ)/g, "L");
+    hyphenated_text = hyphenate(original_text)
+      .replace(/(l·|ŀ)/g, "l")
+      .replace(/(L·|Ŀ)/g, "L")
+      .replace(/\bPius\b/g, "Pi_us");
     countSyllables(hyphenated_text);
     document.getElementById("result").innerHTML = hyphenated_text;
     document.getElementById("count").innerHTML = countSyllables(hyphenated_text) + " síl·labes";
