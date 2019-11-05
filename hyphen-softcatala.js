@@ -1,5 +1,7 @@
   var hyphenate=createHyphenator(hyphenationPatternsCa,{debug:true,hyphenChar:'_'});
 
+  onChangeFunction(); //first time
+
   function onChangeFunction() {
     original_text = normalizeNFC(document.getElementById("text_to_hyphen").value);
     hyphenated_text = hyphenate(original_text)
