@@ -11,7 +11,12 @@
       .replace(/à_cid pe_ri_ò_dic/g, "à_cid per_iò_dic");
     countSyllables(hyphenated_text);
     document.getElementById("result").innerHTML = hyphenated_text;
-    document.getElementById("count").innerHTML = countSyllables(hyphenated_text) + " síl·labes";
+    var count = countSyllables(hyphenated_text);
+    var syllablesStr = " síl·labes";
+    if (count === 1) {
+      syllablesStr = " síl·laba";
+    }
+    document.getElementById("count").innerHTML = count + syllablesStr;
   }
 
   function countSyllables(s) {
