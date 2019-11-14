@@ -22,10 +22,11 @@
 	var ambiguities = checkAmbiguities(original_text)
 	
 	if (ambiguities.count >= 1) {
+		hintStr = "<br/>";
 		if (ambiguities.count == 1) {
-			hintStr = "Partició sil·làbica dubtosa\n<ul>\n"
+			hintStr += "Partició sil·làbica dubtosa\n<ul>\n"
 		}
-		else hintStr = "Particions sil·làbiques dubtoses\n<ul>\n"		
+		else hintStr += "Particions sil·làbiques dubtoses\n<ul>\n"		
 		hintStr += ambiguities.hints;
  		hintStr += "</ul>\n"
 		//hintStr+="<br/><br/>";
