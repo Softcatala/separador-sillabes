@@ -28,7 +28,7 @@
 		else hintStr = "Particions sil·làbiques dubtoses\n<ul>\n"		
 		hintStr += ambiguities.hints;
  		hintStr += "</ul>\n"
-		hintStr+="<br/><br/>";
+		//hintStr+="<br/><br/>";
 		document.getElementById("warning").innerHTML = hintStr;		
 		document.getElementById("warning").style.display = "inline";
 	} else document.getElementById("warning").style.display = "none";
