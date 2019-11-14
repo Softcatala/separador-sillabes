@@ -22,8 +22,10 @@
 	var ambiguities = checkAmbiguities(original_text)
 	
 	if (ambiguities.count >= 1) {
-		if (ambiguities.count == 1)	hintStr = "Atenció: el text conté un mot amb més d'una partició sil·làbica possible o és dubtosa:\n<ul>\n"
-		else hintStr = "Atenció: el text conté mots amb més d'una partició sil·làbica possible o són dubtoses:\n<ul>\n"		
+		if (ambiguities.count == 1) {
+			hintStr = "Partició sil·làbica dubtosa\n<ul>\n"
+		}
+		else hintStr = "Particions sil·làbiques dubtoses\n<ul>\n"		
 		hintStr += ambiguities.hints;
  		hintStr += "</ul>\n"
 		hintStr+="<br/><br/>";
@@ -55,13 +57,17 @@
 		{re:"\\bpairàs\\b", cs:"i", state:0, hint:"La forma verbal \"pairàs\" tant pot ser del verb \"pair\", i la partició seria \"pa_i_ràs\", com del verb \"pairar\", i aleshores seria \"pai_ràs\"."},
 		{re:"\\bperiòdi(c|cs|ca|ques)\\b", cs:"i", state:0, hint:"La partició del mot \"periòdic\" pot ser \"pe_ri_ò_dic\", de període, o \"per_iò_dic\", d'àcid periòdic."},
 		{re:"\\b(Pius|PIUS)\\b", cs:"", state:0, hint:"El nom propi \"Pius\" té la partició \"Pi_us\", però el substantiu plural \"pius\" és monosil·làbic."},
-		{re:"\\bshakespear(e|ià|ians|iana|ianes)\\b", cs:"i", state:0, hint:"L'Enciclopèdia Catalana suggereix una partició diferent per a \"Shakespeare\" i derivats."},
+		//{re:"\\bshakespear(e|ià|ians|iana|ianes)\\b", cs:"i", state:0, hint:"L'Enciclopèdia Catalana suggereix una partició diferent per a \"Shakespeare\" i derivats."},
 		{re:"\\btrair\\b", cs:"i", state:0, hint:"La forma verbal \"trair\" tant pot ser del verb \"trair\", i la partició seria \"tra_ir\", com del verb \"trairar\", i aleshores seria \"trair\"."},
 		{re:"\\btrairem\\b", cs:"i", state:0, hint:"La forma verbal \"trairem\" tant pot ser del verb \"trair\", i la partició seria \"tra_i_rem\", com del verb \"trairar\", i aleshores seria \"trai_rem\"."},
 		{re:"\\btraireu\\b", cs:"i", state:0, hint:"La forma verbal \"traireu\" tant pot ser del verb \"trair\", i la partició seria \"tra_i_reu\", com del verb \"trairar\", i aleshores seria \"trai_reu\"."},
 		{re:"\\btrairen\\b", cs:"i", state:0, hint:"La forma verbal \"trairen\" tant pot ser del verb \"trair\", i la partició seria \"tra_i_ren\", com del verb \"trairar\", i aleshores seria \"trai_ren\"."},
 		{re:"\\btrairàs\\b", cs:"i", state:0, hint:"La forma verbal \"trairàs\" tant pot ser del verb \"trair\", i la partició seria \"tra_i_ràs\", com del verb \"trairar\", i aleshores seria \"trai_ràs\"."},
-		{re:"\\bzimbabu(ès|esos|esa|eses)\\b", cs:"i", state:0, hint:"L'Enciclopèdia Catalana suggereix una partició diferent per a \"zimbabuès\" i derivats."}
+		{re:"\\bzimbabuès\\b", cs:"i", state:0, hint:"L'Enciclopèdia Catalana suggereix zim_ba_buès."},
+		{re:"\\bzimbabués\\b", cs:"i", state:0, hint:"L'Enciclopèdia Catalana suggereix zim_ba_bués."},
+		{re:"\\bzimbabuesa\\b", cs:"i", state:0, hint:"L'Enciclopèdia Catalana suggereix zim_ba_bue_sa."},
+		{re:"\\bzimbabueses\\b", cs:"i", state:0, hint:"L'Enciclopèdia Catalana suggereix zim_ba_bue_ses."},
+		{re:"\\bzimbabuesos\\b", cs:"i", state:0, hint:"L'Enciclopèdia Catalana suggereix zim_ba_bue_sos."}
 	];
 
 	var output = {
