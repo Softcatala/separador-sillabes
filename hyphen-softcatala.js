@@ -51,7 +51,8 @@
   function checkAmbiguities(s) {
 	var checks = [
 		{re:"\\baguant\\b", cs:"i", state:0, hint:"La partició del mot \"aguant\" pot ser \"a_gu_ant\" (del verb \"aguar\") o \"a_guant\" (substantiu o forma verbal del verb \"aguantar\")"},
-		{re:"\\bpair\\b", cs:"i", state:0, hint:"La forma verbal \"trair\" tant pot ser del verb \"pair\", i la partició seria \"pa_ir\", com del verb \"pairar\", i aleshores seria \"pair\"."},
+		{re:"\\bpair\\b", cs:"i", state:0, hint:"La forma verbal \"pair\" tant pot ser del verb \"pair\", i la partició seria \"pa_ir\", com del verb \"pairar\", i aleshores seria \"pair\"."},
+		{re:"\\bduumvir[a-z]*\\b", cs:"i", state:0, hint:"L'Enciclopèdia Catalana suggereix una partició diferent per a \"duumvir\" i derivats."},
 		{re:"\\bpairem\\b", cs:"i", state:0, hint:"La forma verbal \"pairem\" tant pot ser del verb \"pair\", i la partició seria \"pa_i_rem\", com del verb \"pairar\", i aleshores seria \"pai_rem\"."},
 		{re:"\\bpaireu\\b", cs:"i", state:0, hint:"La forma verbal \"paireu\" tant pot ser del verb \"pair\", i la partició seria \"pa_i_reu\", com del verb \"pairar\", i aleshores seria \"pai_reu\"."},
 		{re:"\\bpairen\\b", cs:"i", state:0, hint:"La forma verbal \"pairen\" tant pot ser del verb \"pair\", i la partició seria \"pa_i_ren\", com del verb \"pairar\", i aleshores seria \"pai_ren\"."},
