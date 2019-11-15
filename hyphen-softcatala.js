@@ -3,20 +3,14 @@
   onChangeFunction(); //first time
 
   function onChangeFunction() {
-    original_text = normalizeNFC(document.getElementById("text_to_hyphen").value);
-    hyphenated_text = hyphenate(original_text)
-      .replace(/(l·|ŀ)/g, "l")
-      .replace(/(L·|Ŀ)/g, "L")
-      .replace(/\bPius\b/g, "Pi_us")
-      .replace(/à_cid pe_ri_ò_dic/g, "à_cid per_iò_dic");
-    countSyllables(hyphenated_text);
-    document.getElementById("result").innerHTML = hyphenated_text;
-    var count = countSyllables(hyphenated_text);
-    var syllablesStr = " síl·labes";
-    if (count === 1) {
-      syllablesStr = " síl·laba";
-    }
-    document.getElementById("count").innerHTML = count + syllablesStr;
+      original_text = normalizeNFC(document.getElementById("text_to_hyphen").value.trim()).replace(/_/g, " ");
+      hyphenated_text = hyphenate(original_text)
+	  .replace(/(l·|ŀ)/g, "l")
+	  .replace(/(L·|Ŀ)/g, "L")
+	  .replace(/\bPius\b/g, "Pi_us")
+	  .replace(/à_cid pe_ri_ò_dic/g, "à_cid per_iò_dic");
+
+      document.getElementById("result").innerHTML = getResult(hyphenated_text);
 	
 	var hintStr = "";
 	var ambiguities = checkAmbiguities(original_text)
@@ -34,11 +28,94 @@
 		document.getElementById("warning").style.display = "inline";
 	} else document.getElementById("warning").style.display = "none";
   }
-; 
-  function countSyllables(s) {
-    words = s.split(/[^a-zàáèéìíòóùúäëïöüç·ñ'’ŀâêîôû]/i);
-    return words.filter(String).length;
+
+  function getResult(s) {
+      var words = s.split(/[^a-zàáèéìíòóùúäëïöüç·ñ'’ŀâêîôû_-]/i);
+      words = words.filter(String);
+      wl = words.length;
+      if (wl === 0) {return "";}
+      var new_hyphen_text = "";
+      var i;
+      // compta amb sinalefes i elisions
+      for (i = 0; i < wl - 1; i++) {
+	  new_hyphen_text += words[i].toString();
+	  if (words[i].match(/[aeiouàèìòùáéíóúïü]$/i) && !words[i].match(/[aeiou][iu]$/i) && words[i+1].match(/^h?[aeiouàèìòùáéíóúïü]/i) && !words[i+1].match(/^h?[iu][aeiouàèìòùáéíóúïü]/i)) {
+	      new_hyphen_text = new_hyphen_text.replace(/‿(h[io])$/i, ' $1');
+	      new_hyphen_text += "‿";
+	  } else {
+	      new_hyphen_text += " ";
+	  }
+	  new_hyphen_text = new_hyphen_text.replace(/([_-][^aeiou]*[eiïa])(-h[io][ ‿])$/i, '$1‿$2');
+	  new_hyphen_text = new_hyphen_text.replace(/(‿-h[io])‿$/i, '$1 ');
+      }
+      new_hyphen_text += words[wl - 1].toString();
+      new_hyphen_text = new_hyphen_text.replace(/([_-][^aeiou]*[eiïa])(-h[io])$/i, '$1‿$2');
+
+      //última paraula
+      lastword = words[wl - 1].toString();
+      numlastword = classifyWord(lastword);
+
+      // sinalefa després de l'última síl·laba tònica
+      var sinalefa_final = 0;
+      if (lastword.match(/([_-][^aeiou]*[eiïa])(-h[io])$/)) {sinalefa_final=1;}
+
+      syllables = s.split(/[^a-zàáèéìíòóùúäëïöüç·ñ'’ŀâêîôû]/i);
+      syllables2 = new_hyphen_text.replace(/‿-/,"‿").split(/[^a-zàáèéìíòóùúäëïöüç·ñ'’ŀâêîôû‿]/i);
+
+      numsyl = syllables.filter(String).length;
+      numsyl2 = syllables2.filter(String).length;
+
+      if (numsyl === 0) {return "";}
+      
+      var syllablesStr = " síl·labes";
+      if (numsyl === 1) {
+	  syllablesStr = " síl·laba";
+      }
+      var result = numsyl;
+      if (numsyl != numsyl2) {
+	  result += " ("+numsyl2+")";
+      }
+      if (numlastword != 0) {
+	  result += " ["+(numsyl + numlastword);
+          if (numsyl != numsyl2) {
+	      result += " ("+(numsyl2 + numlastword + sinalefa_final)+")";
+	  }
+	  result +="]";
+      }
+      new_hyphen_text = new_hyphen_text.replace(/_/g, '|').replace(/ /g, "&nbsp;&nbsp;");
+      result+= " " + syllablesStr + ": " + new_hyphen_text;
+      return result;
   }
+
+function classifyWord(word) {
+    var w = word.trim();
+//    if (!w.matches(/_/)) {
+//	w = hyphenate(w);
+    //    }
+
+    //elimina pronoms febles
+    var syl_removed = 0;
+    while ( w.match(/(['’]en|['’]hi|['’]ho|['’]l|['’]ls|['’]m|['’]n|['’]ns|['’]s|['’]t|-el|-els|-em|-en|-ens|-hi|-ho|-l|-la|-les|-li|-lo|-los|-m|-me|-n|-ne|-nos|-s|-se|-t|-te|-us|-vos)$/)) {
+	if (w.match(/(['’]en|['’]hi|['’]ho|-el|-els|-em|-en|-ens|-hi|-ho|-la|-les|-li|-lo|-los|-me|-ne|-nos|-se|-te|-us|-vos)$/)) {
+	    syl_removed++;
+	}
+	w = w.replace(/(['’]en|['’]hi|['’]ho|['’]l|['’]ls|['’]m|['’]n|['’]ns|['’]s|['’]t|-el|-els|-em|-en|-ens|-hi|-ho|-l|-la|-les|-li|-lo|-los|-m|-me|-n|-ne|-nos|-s|-se|-t|-te|-us|-vos)$/, "");
+    }    
+	
+	
+    syll = w.split(/_/);
+    ns = syll.filter(String).length;
+    r = 0;
+    if (ns === 0) {return 0;} //empty word
+    else if (ns === 1) {r = 0;} // aguda
+    else if (ns>2 && syll[ns-3].match(/[àáèéìíòóùú]/i)) {r = -2;} //esdrúixola
+    else if (syll[ns-2].match(/[àáèéìíòóùú]/i)) {r = -1;} //plana
+    else if (syll[ns-1].match(/[àáèéìíòóùú]/i)) {r = 0;} //aguda
+    else if (syll[ns-1].match(/[aeo][iu][^aeiou]*$/i)) {r = 0;} // aguda (amb diftong)
+    else if (syll[ns-1].match(/([eiï]n|[aeiouï]s?)$/i)) {r = -1;} //plana
+    else r = 0; //aguda
+    return r - syl_removed;
+}
 
   function normalizeNFC(userText) {
     var normalizedText = userText;
