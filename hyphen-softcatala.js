@@ -49,7 +49,13 @@ function getResultLine(s) {
     words = words.filter(String);
     wl = words.length;
     if (wl === 0) {
-        return "";
+        return {
+	        hyphenated_line: "",
+	        count_graphical: 0,
+	        count_phonetical: 0,
+	        count_poetical1: 0,
+	        count_poetical2: 0
+	    }
     }
     var new_hyphen_text = "";
     var i;
