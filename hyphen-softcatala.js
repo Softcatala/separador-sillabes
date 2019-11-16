@@ -69,16 +69,16 @@
 
       // resultat
       var result = new_hyphen_text.replace(/_/g, '|').replace(/ /g, "&nbsp;&nbsp;");
-      result +="<br/>";
+      result +="<br/><br/>";
 
       result += "Recompte gràfic: "+numsyl+sillabes(numsyl)+"<br/>";
-      result += "Recompte fonètic: "+numsyl2+sillabes(numsyl)+"<br/>";
+      result += "Recompte fonètic: "+numsyl2+sillabes(numsyl)+" (amb elisions i sinalefes)<br/>";
       result += "Recompte poètic: ";
 	  result += (numsyl + numlastword);
           if (numsyl + numlastword != numsyl2 + numlastword + sinalefa_final) {
 	      result += " ("+(numsyl2 + numlastword + sinalefa_final)+")";
 	  }
-	  result += sillabes(numsyl) + " fins a l'última síl·laba tònica<br/>";
+	  result += sillabes(numsyl  + numlastword) + " (fins a l'última síl·laba tònica)<br/>";
 
       return result;
   }
