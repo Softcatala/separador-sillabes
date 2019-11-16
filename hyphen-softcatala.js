@@ -66,25 +66,29 @@
       numsyl2 = syllables2.filter(String).length;
 
       if (numsyl === 0) {return "";}
-      
-      var syllablesStr = " síl·labes";
-      if (numsyl === 1) {
-	  syllablesStr = " síl·laba";
-      }
-      var result = numsyl;
-      if (numsyl != numsyl2) {
-	  result += " ("+numsyl2+")";
-      }
-      if (numlastword != 0) {
-	  result += " ["+(numsyl + numlastword);
+
+      // resultat
+      var result = new_hyphen_text.replace(/_/g, '|').replace(/ /g, "&nbsp;&nbsp;");
+      result +="<br/>";
+
+      result += "Recompte gràfic: "+numsyl+sillabes(numsyl)+"<br/>";
+      result += "Recompte fonètic: "+numsyl2+sillabes(numsyl)+"<br/>";
+      result += "Recompte poètic: ";
+	  result += (numsyl + numlastword);
           if (numsyl != numsyl2) {
 	      result += " ("+(numsyl2 + numlastword + sinalefa_final)+")";
 	  }
-	  result +="]";
-      }
-      new_hyphen_text = new_hyphen_text.replace(/_/g, '|').replace(/ /g, "&nbsp;&nbsp;");
-      result+= " " + syllablesStr + ": " + new_hyphen_text;
+	  result += sillabes(numsyl) + "fins a l'última síl·laba tònica<br/>";
+
       return result;
+  }
+
+  function sillabes(i) {
+  	if (i ===1) {
+  		return "síl·laba";
+  	} else {
+  		return "síl·labes";
+  	}
   }
 
 function classifyWord(word) {
