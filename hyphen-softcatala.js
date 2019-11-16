@@ -75,7 +75,7 @@
       result += "Recompte fonètic: "+numsyl2+sillabes(numsyl)+"<br/>";
       result += "Recompte poètic: ";
 	  result += (numsyl + numlastword);
-          if (numsyl != numsyl2) {
+          if (numsyl + numlastword != numsyl2 + numlastword + sinalefa_final) {
 	      result += " ("+(numsyl2 + numlastword + sinalefa_final)+")";
 	  }
 	  result += sillabes(numsyl) + " fins a l'última síl·laba tònica<br/>";
