@@ -56,7 +56,7 @@ function getResultLine(s) {
     // compta amb sinalefes i elisions
     for (i = 0; i < wl - 1; i++) {
         new_hyphen_text += words[i].toString();
-        if (words[i].match(/[aeiouàèìòùáéíóúïü]$/i) && !words[i].match(/[aeiou][iu]$/i) && words[i + 1].match(/^h?[aeiouàèìòùáéíóúïü]/i) && !words[i + 1].match(/^h?[iu][aeiouàèìòùáéíóúïü]/i)) {
+        if (words[i].match(/[aeiouàèìòùáéíóúïü]$/i) && !words[i].match(/([aeio][iu]|^[^q]*ui)$/i) && words[i + 1].match(/^h?[aeiouàèìòùáéíóúïü]/i) && !words[i + 1].match(/^h?[iu][aeiouàèìòùáéíóúïü]/i)) {
             new_hyphen_text = new_hyphen_text.replace(/‿(h[io])$/i, ' $1');
             new_hyphen_text += "‿";
         } else {
