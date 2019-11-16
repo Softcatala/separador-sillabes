@@ -3,21 +3,33 @@ var hyphenate = createHyphenator(hyphenationPatternsCa, {
     hyphenChar: '_'
 });
 
-onChangeFunction(); //first time
+String.prototype.lines = function() { return this.split(/\r*\n/); }
+String.prototype.lineCount = function() { return this.lines().filter(String).length; }
 
-function onChangeFunction() {
-    original_text = normalizeNFC(document.getElementById("text_to_hyphen").value.trim()).replace(/_/g, " ");
-    hyphenated_text = hyphenate(original_text)
-        .replace(/(l·|ŀ)/g, "l")
+String.prototype.adjustHyphenatedText = function() {
+    return this.replace(/(l·|ŀ)/g, "l")
         .replace(/(L·|Ŀ)/g, "L")
         .replace(/\bPius\b/g, "Pi_us")
         .replace(/à_cid pe_ri_ò_dic/g, "à_cid per_iò_dic");
+}
 
-    document.getElementById("result").innerHTML = getResult(hyphenated_text);
+onChangeFunction(); //first time
 
+function onChangeFunction() {
+    var original_text = normalizeNFC(document.getElementById("text_to_hyphen").value.trim()).replace(/_/g, " ");
+    var lc = original_text.lineCount();
+    if (lc < 1) {
+        return;
+    } else if ( lc == 1) {
+        hyphenated_text = hyphenate(original_text).adjustHyphenatedText();
+        document.getElementById("result").innerHTML = getMessageOneLine(hyphenated_text);
+    } else if (lc > 1) {
+        document.getElementById("result").innerHTML = getMessageMultipleLines(original_text);
+    }
+
+    // show warnings
     var hintStr = "";
     var ambiguities = checkAmbiguities(original_text)
-
     if (ambiguities.count >= 1) {
         hintStr = "<br/>";
         if (ambiguities.count == 1) {
@@ -31,7 +43,8 @@ function onChangeFunction() {
     } else document.getElementById("warning").style.display = "none";
 }
 
-function getResult(s) {
+
+function getResultLine(s) {
     var words = s.split(/[^a-zàáèéìíòóùúäëïöüç·ñ'’ŀâêîôû_-]/i);
     words = words.filter(String);
     wl = words.length;
@@ -71,25 +84,58 @@ function getResult(s) {
     numsyl = syllables.filter(String).length;
     numsyl2 = syllables2.filter(String).length;
 
-    if (numsyl === 0) {
+    return {
+        hyphenated_line: new_hyphen_text.replace(/_/g, '|').replace(/ /g, "&nbsp;&nbsp;"),
+        count_graphical: numsyl,
+        count_phonetical: numsyl2,
+        count_poetical1: numsyl + numlastword,
+        count_poetical2: numsyl2 + numlastword + sinalefa_final
+    }
+}
+
+function getMessageOneLine(s) {
+    var r = getResultLine(s);
+    if (r.count_graphical === 0) {
         return "";
     }
-
-    // resultat
-    var result = new_hyphen_text.replace(/_/g, '|').replace(/ /g, "&nbsp;&nbsp;");
+    var result = "";
+    result += r.hyphenated_line;
     result += "<br/><br/>";
-
-    result += "Recompte gràfic: " + numsyl + sillabes(numsyl) + "<br/>";
-    result += "Recompte fonètic: " + numsyl2 + sillabes(numsyl) + " (amb elisions i sinalefes)<br/>";
+    result += "Recompte gràfic: " + r.count_graphical + sillabes(r.count_graphical) + "<br/>";
+    result += "Recompte fonètic: " + r.count_phonetical + sillabes(r.count_phonetical) + " (amb elisions i sinalefes)<br/>";
     result += "Recompte poètic: ";
-    result += (numsyl + numlastword);
-    if (numsyl + numlastword != numsyl2 + numlastword + sinalefa_final) {
-        result += " (" + (numsyl2 + numlastword + sinalefa_final) + ")";
+    result += (r.count_poetical1);
+    if (r.count_poetical1 != r.count_poetical2) {
+        result += " (" + r.count_poetical2 + ")";
     }
-    result += sillabes(numsyl + numlastword) + " (fins a l'última síl·laba tònica)<br/>";
-
+    result += sillabes(r.count_poetical1) + " (fins a l'última síl·laba tònica)<br/>";
     return result;
 }
+
+function getMessageMultipleLines(s){
+    var lines = s.lines().filter(String);
+    var i = 0;
+    var result = lines.length + " versos<br/><br/>";
+    result += '<table>\n';
+    for (i = 0; i < lines.length; i++) {
+        var r = getResultLine(hyphenate(lines[i]).adjustHyphenatedText());
+        result += "<tr><td>";
+        result += (r.count_poetical1);
+        if (r.count_poetical1 != r.count_poetical2) {
+            result += " (" + r.count_poetical2 + ")";
+        }
+        result += "</td><td>";
+        result += r.hyphenated_line;
+
+        result += "</td></tr>";
+
+
+    }
+    result += '</table>';
+    return result;
+}
+
+
 
 function sillabes(i) {
     if (i === 1) {
@@ -102,7 +148,7 @@ function sillabes(i) {
 function classifyWord(word) {
     var w = word.trim();
     //    if (!w.matches(/_/)) {
-    //	w = hyphenate(w);
+    //    w = hyphenate(w);
     //    }
 
     //elimina pronoms febles
