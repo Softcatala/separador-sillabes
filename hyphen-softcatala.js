@@ -115,7 +115,7 @@ function getMessageOneLine(s) {
 function getMessageMultipleLines(s){
     var lines = s.lines().filter(String);
     var i = 0;
-    var result = lines.length + " versos<br/><br/>";
+    var result = lines.length + " versos";
     result += '<table>\n';
     for (i = 0; i < lines.length; i++) {
         var r = getResultLine(hyphenate(lines[i]).adjustHyphenatedText());
@@ -126,16 +126,11 @@ function getMessageMultipleLines(s){
         }
         result += "</td><td>";
         result += r.hyphenated_line;
-
         result += "</td></tr>";
-
-
     }
     result += '</table>';
     return result;
 }
-
-
 
 function sillabes(i) {
     if (i === 1) {
