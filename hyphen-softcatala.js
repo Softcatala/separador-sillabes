@@ -78,16 +78,16 @@
           if (numsyl != numsyl2) {
 	      result += " ("+(numsyl2 + numlastword + sinalefa_final)+")";
 	  }
-	  result += sillabes(numsyl) + "fins a l'última síl·laba tònica<br/>";
+	  result += sillabes(numsyl) + " fins a l'última síl·laba tònica<br/>";
 
       return result;
   }
 
   function sillabes(i) {
   	if (i ===1) {
-  		return "síl·laba";
+  		return " síl·laba";
   	} else {
-  		return "síl·labes";
+  		return " síl·labes";
   	}
   }
 
