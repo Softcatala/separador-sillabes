@@ -19,7 +19,8 @@ function onChangeFunction() {
     var original_text = normalizeNFC(document.getElementById("text_to_hyphen").value.trim()).replace(/_/g, " ");
     var lc = original_text.lineCount();
     if (lc < 1) {
-        return;
+        document.getElementById("result").innerHTML = "";
+	return;
     } else if ( lc == 1) {
         hyphenated_text = hyphenate(original_text).adjustHyphenatedText();
         document.getElementById("result").innerHTML = getMessageOneLine(hyphenated_text);
