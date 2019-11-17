@@ -54,7 +54,8 @@ function getResultLine(s) {
 	        count_graphical: 0,
 	        count_phonetical: 0,
 	        count_poetical1: 0,
-	        count_poetical2: 0
+	        count_poetical2: 0,
+	        numwords: 0
 	    }
     }
     var new_hyphen_text = "";
@@ -95,7 +96,8 @@ function getResultLine(s) {
         count_graphical: numsyl,
         count_phonetical: numsyl2,
         count_poetical1: numsyl + numlastword,
-        count_poetical2: numsyl2 + numlastword + sinalefa_final
+        count_poetical2: numsyl2 + numlastword + sinalefa_final,
+        numwords: wl
     }
 }
 
@@ -108,13 +110,17 @@ function getMessageOneLine(s) {
     result += r.hyphenated_line;
     result += "<br/><br/>";
     result += "Recompte gràfic: " + r.count_graphical + sillabes(r.count_graphical) + "<br/>";
-    result += "Recompte fonètic: " + r.count_phonetical + sillabes(r.count_phonetical) + " (amb elisions i sinalefes)<br/>";
-    result += "Recompte poètic: ";
-    result += (r.count_poetical1);
-    if (r.count_poetical1 != r.count_poetical2) {
-        result += " (" + r.count_poetical2 + ")";
+    if (r.count_graphical != r.count_phonetical) {
+        result += "Recompte fonètic: " + r.count_phonetical + sillabes(r.count_phonetical) + " (amb elisions i sinalefes)<br/>";
     }
-    result += sillabes(r.count_poetical1) + " (fins a l'última síl·laba tònica)<br/>";
+    if (r.numwords > 1) {
+	    result += "Recompte poètic: ";
+	    result += (r.count_poetical1);
+	    if (r.count_poetical1 != r.count_poetical2) {
+	        result += " (" + r.count_poetical2 + ")";
+	    }
+	    result += sillabes(r.count_poetical1) + " (fins a l'última síl·laba tònica)<br/>";
+    }
     return result;
 }
 
