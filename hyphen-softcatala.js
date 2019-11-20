@@ -13,6 +13,12 @@ String.prototype.adjustHyphenatedText = function() {
         .replace(/à_cid pe_ri_ò_dic/g, "à_cid per_iò_dic");
 }
 
+String.prototype.removeApostrophe = function() {
+    return this.replace(/^['’]/, '')
+        .replace(/['’]$/, '')
+        .replace(/([^a-zàáèéìíòóùúäëïöüç·ñŀâêîôû])['’]([^a-zàáèéìíòóùúäëïöüç·ñŀâêîôû])/, '$1$2')
+}
+
 onChangeFunction(); //first time
 
 function onChangeFunction() {
@@ -46,8 +52,10 @@ function onChangeFunction() {
 
 
 function getResultLine(s) {
-    var words = s.split(/[^a-zàáèéìíòóùúäëïöüç·ñ'’ŀâêîôû_-]/i);
+    var ss = s.removeApostrophe();
+    var words = ss.split(/[^a-zàáèéìíòóùúäëïöüç·ñ'’ŀâêîôû_-]/i);
     words = words.filter(String);
+    console.log(words);
     wl = words.length;
     if (wl === 0) {
         return {
@@ -94,7 +102,7 @@ function getResultLine(s) {
         sinalefa_final = 1;
     }
 
-    syllables = s.split(/[^a-zàáèéìíòóùúäëïöüç·ñ'’ŀâêîôû]/i);
+    syllables = ss.split(/[^a-zàáèéìíòóùúäëïöüç·ñ'’ŀâêîôû]/i);
     syllables2 = new_hyphen_text.replace(/‿-/, "‿").split(/[^a-zàáèéìíòóùúäëïöüç·ñ'’ŀâêîôû‿]/i);
 
     numsyl = syllables.filter(String).length;
