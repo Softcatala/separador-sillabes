@@ -101,7 +101,7 @@ function getResultLine(s) {
     numsyl2 = syllables2.filter(String).length;
 
     return {
-        hyphenated_line: new_hyphen_text.replace(/_/g, '|').replace(/ /g, "&nbsp;&nbsp;"),
+        hyphenated_line: new_hyphen_text.replace(/_/g, '|').replace(/ /g, "&nbsp; "),
         count_graphical: numsyl,
         count_phonetical: numsyl2,
         count_poetical1: numsyl + numlastword,
