@@ -64,7 +64,15 @@ function getResultLine(s) {
     // compta amb sinalefes i elisions
     for (i = 0; i < wl - 1; i++) {
         new_hyphen_text += words[i].toString();
-        if (words[i].match(/[aeiouàèìòùáéíóúïü]h?$/i) && !words[i].match(/([aeio][iu]|^[^q]*ui)$/i) && words[i + 1].match(/^h?[aeiouàèìòùáéíóúïü]/i) && !words[i + 1].match(/^h?[iu][aeiouàèìòùáéíóúïü]/i)) {
+        if (
+          //primera paraula
+          ( 
+             // erra final muda
+            (words[i].match(/[aeiou]r$/i) && !words[i].match(/^(bar|per|cor|car|or|mor|pur|tir|mar|fu_tur|fa_mi_li_ar|es_pec_ta_cu_lar|a_mor|fa_vor|ho_nor|va_lor|sos_pir|a_tur|e_nyor|ra_dar)$/i))
+            ||
+            (words[i].match(/[aeiouàèìòùáéíóúïü]h?$/i) && !words[i].match(/([aeio][iu]|^[^q]*ui)$/i)))
+          // segona paraula
+          && words[i + 1].match(/^h?[aeiouàèìòùáéíóúïü]/i) && !words[i + 1].match(/^h?[iu][aeiouàèìòùáéíóúïü]/i)) {
             new_hyphen_text = new_hyphen_text.replace(/‿(h?[io])$/i, ' $1');
             new_hyphen_text += "‿";
         } else {
