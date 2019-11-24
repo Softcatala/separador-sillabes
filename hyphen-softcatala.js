@@ -21,8 +21,41 @@ String.prototype.removeApostrophe = function() {
 
 
 String.prototype.isErraSensible = function() {  
-    var erraSensible = ["an_te_ri_or", "pos_te_ri_or", "a_fer", "a_mer", "a_mor", "an_gu_lar", "an_ti_so_lar", "a_nu_lar", "a_tur", "at_zar", "at_zur", "au_ri_cu_lar", "au_to_car", "a_var", "a_xil_lar", "bar", "ba_sar", "bi_li_ar", "bi_llar", "bi_po_lar", "can_gur", "ca_ni_cu_lar", "ca_pil_lar", "car", "car_bur", "ca_vi_ar", "cel_lu_lar", "ci_a_nur", "clar_obs_cur", "clo_rur", "con_jur", "con_su_lar", "cor", "des_po_der", "e_li_xir", "e_mir", "e_nyor", "es_co_lar", "es_pec_ta_cu_lar", "e_xem_plar", "ex_te_ri_or", "fa_mi_li_ar", "fa_vor", "fu_ni_cu_lar", "fur", "fu_tur", "han_gar", "ho_nor", "im_po_pu_lar", "im_pur", "in_co_lor", "in_fe_ri_or", "in_su_lar", "in_te_ri_or", "ir_re_gu_lar", "ju_gu_lar", "lum_bar", "lu_nar", "mar", "ma_xil_lar", "me_dul_lar", "men_hir", "mo_le_cu_lar", "mor", "mur", "mus_cu_lar", "o_cu_lar", "or", "pa_pir", "par_ti_cu_lar", "pe_cu_li_ar", "pe_nin_su_lar", "per", "po_lar", "pre_ma_tur", "pul_mo_nar", "pur", "ra_dar", "res_pir", "sa_bor", "se_cu_lar", "sin_gu_lar", "so_lar", "so_nor", "sos_pir", "su_pe_ri_or", "tir", "ti_tu_lar", "tri_an_gu_lar", "tu_te_lar", "ul_te_ri_or", "va_lor", "és_ser"];
-    return (erraSensible.includes(this.toString()));
+    var erraSensible = [ "a_cer", "ac_nur", "a_e_ro_far", "a_fer", "al_càs_ser", "al_gut_zir", "al_mo_gà_ver", "al_mí_var", "a_ma_teur", "a_mer",
+        "a_mor", "an_gu_lar", "an_te_ri_or", "an_ti_so_lar", "a_nu_lar", "a_qüí_fer", "as_tor", "a_tur", "at_zar", "at_zur",
+        "au_ri_cu_lar", "au_to_car", "au_xi_li_ar", "a_var", "a_xil_lar", "bai_xa_mar", "ba_le_ar", "bar", "ba_sar", "ber_ber",
+        "bi_li_ar", "bi_llar", "bi_no_cu_lar", "bi_po_lar", "bo_lí_var", "bor", "bro_mur", "bí_ter", "bò_xer", "bún_quer",
+        "ca_dà_ver", "caix_mir", "ca_la_mar", "ca_lo_rí_fer", "can_gur", "ca_ni_cu_lar", "ca_pil_lar", "car", "car_bur",
+        "car_di_o_vas_cu_lar", "ca_ràc_ter", "cat_cher", "ca_tè_ter", "ca_vi_ar", "cel_lu_lar", "ci_a_nur", "ci_clo_mo_tor",
+        "ci_gar", "cir_cu_lar", "cir_cum_po_lar", "clar_obs_cur", "clau_dà_tor", "clor", "clo_rur", "clí_per", "con_ci_li_ar",
+        "con_jur", "con_su_lar", "con_tra_cor", "con_tra_fur", "cor", "cre_pus_cu_lar", "crà_ter", "cuir", "càn_cer",
+        "còn_dor", "cór_ner", "cú_ter", "dac_ti_lar", "da_kar", "de_cor", "des_a_mor", "des_ho_nor", "des_po_der", "dis_par",
+        "dò_lar", "e_li_xir", "e_mir", "e_nyor", "e_pis_to_lar", "e_qua_dor", "er_ror", "es_co_lar", "es_càn_ner", "es_cú_ter",
+        "es_fín_ter", "es_pec_ta_cu_lar", "es_tel_lar", "es_tor", "es_tu_por", "es_tàn_dard", "es_tàr_ter", "e_xem_plar",
+        "ex_te_ri_or", "ex_tra_cel_lu_lar", "fa_mi_li_ar", "fa_quir", "far", "fa_vor", "fer_vor", "flu_o_rur", "ful_gor",
+        "fu_ni_cu_lar", "fur", "fu_ror", "fu_tur", "fè_mur", "fòs_for", "gir", "gua_dal_qui_vir", "guèi_ser", "gàngs_ter",
+        "han_gar", "he_li_còp_ter", "hi_dro_car_bur", "hi_drur", "ho_nor", "hor_ror", "hu_mor", "hàms_ter", "hú_mer",
+        "hús_sar", "im_po_pu_lar", "im_pu_dor", "im_pur", "im_pú_ber", "in_co_lor", "in_fe_ri_or", "in_su_lar", "in_te_ri_or",
+        "ir_re_gu_lar", "jac_quard", "ja_guar", "ju_gu_lar", "jò_quer", "jú_ni_or", "jú_pi_ter", "la_bor", "la_mi_nar", "lar",
+        "len_ti_cu_lar", "li_cor", "llar", "lum_bar", "lum_pur", "lu_nar", "lu_xor", "là_ser", "lí_der", "ma_da_gas_car",
+        "ma_gi_ar", "ma_la_bar", "mar", "ma_xil_lar", "me_dul_lar", "men_hir", "me_nor", "me_te_or", "mi_li_tar", "mir",
+        "mo_her", "mo_lar", "mo_le_cu_lar", "mo_no_mo_tor", "mo_no_pa_ren_tal", "mor", "mo_tor", "mu_dè_jar", "mur",
+        "mus_cu_lar", "mà_na_ger", "màr_tir", "màs_ter", "mís_ter", "ne_nú_far", "nu_cle_ar", "nèc_tar", "ní_ger", "o_cu_lar",
+        "or", "o_vu_lar", "pal_mar", "pan_to_crà_tor", "pa_pir", "par", "pa_ra_mi_li_tar", "par_ti_cu_lar", "pe_cu_li_ar",
+        "pen_du_lar", "pe_nin_su_lar", "per", "per_pen_di_cu_lar", "pe_tro_dò_lar", "ple_na_mar", "po_lar", "po_li_ès_ter",
+        "po_pu_lar", "pos_te_ri_or", "pre_es_co_lar", "pre_li_mi_nar", "pre_ma_tur", "pre_mo_lar", "prò_cer", "pul_mo_nar",
+        "pul_lò_ver", "pur", "pò_quer", "pòr_tic", "pòs_ter", "pú_ber", "qa_tar", "qua_dran_gu_lar", "qua_dri_là_ter",
+        "qua_dri_mo_tor", "que_fer", "ra_dar", "rec_tan_gu_lar", "re_gu_lar", "res_pir", "re_ti_cu_lar", "re_tir",
+        "re_vòl_ver", "ri_gor", "ru_bor", "ru_mor", "sa_bor", "sa_fir", "se_cu_lar", "se_mà_for", "ser", "si_de_car",
+        "si_mi_lar", "sin_ga_pur", "sin_gu_lar", "so_lar", "so_nar", "so_nor", "so_por", "sor", "sos_pir", "sul_fur",
+        "su_pe_ri_or", "sà_tir", "sè_ni_or", "sú_per", "te_mor", "te_nor", "ter_mo_nu_cle_ar", "ter_ror", "tir", "ti_tu_lar",
+        "tre_sor", "tri_an_gu_lar", "trài_ler", "tsar", "tu_bu_lar", "tu_mor", "tu_te_lar", "tò_ner", "ul_te_ri_or",
+        "ul_tra_mar", "u_ni_cel_lu_lar", "u_ni_fa_mi_li_ar", "u_rè_ter", "u_vu_lar", "va_lor", "va_por", "vas_cu_lar",
+        "ve_lar", "ve_lo_mo_tor", "ve_si_cu_lar", "vi_gor", "vi_sir", "vul_gar", "và_ter", "xàr_ter", "zan_zí_bar", "àl_ber",
+        "è_ter", "és_ser", "òs_car", "ú_ter"];
+    var s = this.toString().toLowerCase();
+    s = s.replace(/^[lsdtmn]['’](.*)/i, '$1');
+    return erraSensible.includes(s);
 }
 
 
