@@ -16,7 +16,7 @@ String.prototype.adjustHyphenatedText = function() {
 String.prototype.removeApostrophe = function() {
     return this.replace(/^['’]/, '')
         .replace(/['’]$/, '')
-        .replace(/([^a-zàáèéìíòóùúäëïöüç·ñŀâêîôû])['’]([^a-zàáèéìíòóùúäëïöüç·ñŀâêîôû])/, '$1$2')
+        .replace(/([^a-zàáèéìíòóùúäëïöüç·ñŀâêîôûA-ZÀÁÈÉÌÍÒÓÙÚÄËÏÖÜÇ·ÑĿÂÊÎÔÛ])['’]([^a-zàáèéìíòóùúäëïöüç·ñŀâêîôûA-ZÀÁÈÉÌÍÒÓÙÚÄËÏÖÜÇ·ÑĿÂÊÎÔÛ])/, '$1$2')
 }
 
 
