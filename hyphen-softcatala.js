@@ -58,15 +58,11 @@ String.prototype.isErraSensible = function() {
     return erraSensible.includes(s);
 }
 
-// Restore saved text
-const saved_text = localStorage.getItem("text");
-document.getElementById("text_to_hyphen").value = saved_text ?? '';
 
 onChangeFunction(); //first time
 
 function onChangeFunction() {
     var original_text = normalizeNFC(document.getElementById("text_to_hyphen").value.trim()).replace(/_/g, " ");
-    localStorage.setItem("text", original_text);
     var lc = original_text.lineCount();
     if (lc < 1) {
         document.getElementById("result").innerHTML = "";
